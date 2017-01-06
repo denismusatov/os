@@ -78,7 +78,7 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
 }
 
 extern "C" 
-void putc(char c) {
+int putchar(int c) {
     if (c != '\n') {	
         terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
     }
@@ -93,12 +93,12 @@ void putc(char c) {
     }
     if (terminal_row == VGA_HEIGHT)
         terminal_scroll_up();
+    return c;
 }
 
 extern "C"
 void terminal_write(const char* data, size_t size) {
     for (size_t i = 0; i < size; i++)
-        putc(data[i]);
+        putchar(data[i]);
 }
-
 

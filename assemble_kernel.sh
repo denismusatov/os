@@ -20,25 +20,26 @@ else
     mkdir bin
 fi
 
+export CPPFLAGS="-std=c++14 -fno-rtti -fno-exceptions "
+export COMMON_FLAGS=" -ffreestanding -O2 -Wall -Wextra"
+export CFLAGS="-std=c11 $COMMON_FLAGS"
+
 printf "Assembling bootstrap..."
 i686-elf-as src/boot/boot.s -o build/boot.o && echo "success"
 
 # Assemble libc
-i686-elf-gcc -c libc/src/string.c -o build/string.o -ffreestanding -O2 \
-    -Wall -Wextra
-i686-elf-gcc -c libc/src/printf.c -o build/printf.o -ffreestanding -O2 \
-    -Wall -Wextra
+i686-elf-gcc -c libc/src/string.c -o build/string.o $CFLAGS
+i686-elf-gcc -c libc/src/printf.c -o build/printf.o $CFLAGS
 
 printf "Assembling kernel..."
-i686-elf-g++ -std=c++14 -c src/kernel/kernel.cpp -o build/kernel.o -ffreestanding -O2 \
-    -Wall -Wextra -fno-exceptions -fno-rtti && echo "success"
+i686-elf-g++ $CPPFLAGS -c src/kernel/kernel.cpp -o build/kernel.o $COMMON_FLAGS\
+    && echo "success"
 
-i686-elf-g++ -std=c++14 -c src/kernel/vga/vga.cpp -o build/vga.o -ffreestanding -O2 \
-    -Wall -Wextra -fno-exceptions -fno-rtti
+i686-elf-g++ $CPPFLAGS -c src/kernel/vga/vga.cpp -o build/vga.o $COMMON_FLAGS
 
 
 printf "Linking final binary... "
-i686-elf-gcc -T link/linker.ld -o bin/os.bin -ffreestanding -O2 \
+i686-elf-gcc -T link/linker.ld -o bin/os.bin $COMMON_FLAGS \
     -nostdlib build/boot.o build/kernel.o build/vga.o build/string.o \
     build/printf.o -lgcc && echo "success"
 

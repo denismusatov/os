@@ -17,10 +17,8 @@ void kernel_main() {
     terminal_initialize();
     printf("Hi!\n");
 
-    for (int i = 0; i < 20; ++i) {
-        printf("Welcome\n");
-	    putc(i + '0');
-	    putc('\n');
+    for (int i = -10; i < 10; ++i) {
+        printf("Welcome %d + %s", i, "test string");
     }
 }
 
