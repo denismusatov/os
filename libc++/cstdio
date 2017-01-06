@@ -1,0 +1,10 @@
+#ifndef CSTDIO
+#define CSTDIO
+
+extern "C"
+{
+#include "../libc/include/stdio.h"
+}
+
+#endif
+

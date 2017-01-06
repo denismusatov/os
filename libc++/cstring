@@ -1,0 +1,10 @@
+#ifndef CSTRING
+#define CSTRING
+
+export "C"
+{
+#include "../libc/include/string.h"
+}
+
+#endif
+

@@ -9,10 +9,7 @@
 #error "This file needs to be compiled with a ix86-elf compiler"
 #endif
 
-extern "C"
-{
-#include "../../libc/include/stdio.h"
-}
+#include "../../libc++/cstdio"
 #include "vga/vga.hpp"
 
 extern "C"
