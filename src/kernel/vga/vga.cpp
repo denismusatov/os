@@ -45,7 +45,7 @@ uint16_t* terminal_buffer;
 void terminal_initialize() {
     terminal_row = 0;
     terminal_column = 0;
-    terminal_color = vga_entry_color(vga_color::red, vga_color::white);
+    terminal_color = vga_entry_color(vga_color::white, vga_color::black);
     terminal_buffer = (uint16_t*) 0xB8000;
     for (size_t y = 0; y < VGA_HEIGHT; y++) {
         for (size_t x = 0; x < VGA_WIDTH; x++) {
@@ -77,6 +77,7 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
     terminal_buffer[index] = vga_entry(c, color);
 }
 
+extern "C" 
 void putc(char c) {
     if (c != '\n') {	
         terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
@@ -94,10 +95,10 @@ void putc(char c) {
         terminal_scroll_up();
 }
 
+extern "C"
 void terminal_write(const char* data, size_t size) {
     for (size_t i = 0; i < size; i++)
         putc(data[i]);
 }
-
 
 
