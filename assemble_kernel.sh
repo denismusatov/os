@@ -31,6 +31,9 @@ i686-elf-as src/boot/boot.s -o build/boot.o && echo "success"
 i686-elf-gcc -c libc/src/string.c -o build/string.o $CFLAGS
 i686-elf-gcc -c libc/src/printf.c -o build/printf.o $CFLAGS
 
+# Assemble os-specific IO library
+i686-elf-gcc -c asm/io.c -o build/io.o $CFLAGS
+
 printf "Assembling kernel..."
 i686-elf-g++ $CPPFLAGS -c src/kernel/kernel.cpp -o build/kernel.o $COMMON_FLAGS\
     && echo "success"
