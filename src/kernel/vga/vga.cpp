@@ -79,17 +79,16 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
 
 extern "C" 
 int putchar(int c) {
-    if (c != '\n') {	
-        terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+    if (c == '\n') {	
+        terminal_column = 0;
+        ++terminal_row;
     }
     else {
-        terminal_column = 0;
-        ++terminal_row;
-    }
-
-    if (++terminal_column == VGA_WIDTH) {
-        terminal_column = 0;
-        ++terminal_row;
+        terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+        if (++terminal_column == VGA_WIDTH) {
+            terminal_column = 0;
+            ++terminal_row;
+        }
     }
     if (terminal_row == VGA_HEIGHT)
         terminal_scroll_up();
