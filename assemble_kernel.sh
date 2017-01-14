@@ -14,22 +14,23 @@ else
     mkdir build
 fi
 
-if [ -d bin ]; then
-    true
-else
+if ! [ -d bin ]; then
     mkdir bin
 fi
 
+export SYSROOT="sysroot2"
 export CPPFLAGS="-std=c++14 -fno-rtti -fno-exceptions "
 export COMMON_FLAGS=" -ffreestanding -O2 -Wall -Wextra"
 export CFLAGS="-std=c11 $COMMON_FLAGS"
+
+. ./copy_headers.sh
 
 printf "Assembling bootstrap..."
 i686-elf-as src/boot/boot.s -o build/boot.o && echo "success"
 
 # Assemble libc
-i686-elf-gcc -c libc/src/string.c -o build/string.o $CFLAGS
-i686-elf-gcc -c libc/src/printf.c -o build/printf.o $CFLAGS
+i686-elf-gcc -c klibc/src/string.c -o build/string.o $CFLAGS
+i686-elf-gcc -c klibc/src/kprintf.c -o build/kprintf.o $CFLAGS
 
 # Assemble os-specific IO library
 i686-elf-gcc -c asm/io.c -o build/io.o $CFLAGS
@@ -44,7 +45,7 @@ i686-elf-g++ $CPPFLAGS -c src/kernel/vga/vga.cpp -o build/vga.o $COMMON_FLAGS
 printf "Linking final binary... "
 i686-elf-gcc -T link/linker.ld -o bin/os.bin $COMMON_FLAGS \
     -nostdlib build/boot.o build/kernel.o build/vga.o build/string.o \
-    build/printf.o -lgcc && echo "success"
+    build/kprintf.o -lgcc && echo "success"
 
 cp bin/os.bin isodir/boot/
 

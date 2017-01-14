@@ -78,7 +78,7 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
 }
 
 extern "C" 
-int putchar(int c) {
+int kputchar(int c) {
     if (c == '\n') {	
         terminal_column = 0;
         ++terminal_row;
@@ -98,6 +98,6 @@ int putchar(int c) {
 extern "C"
 void terminal_write(const char* data, size_t size) {
     for (size_t i = 0; i < size; i++)
-        putchar(data[i]);
+        kputchar(data[i]);
 }
 

@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include <limits.h>
 
@@ -8,44 +9,9 @@
 
 extern void terminal_write(const char* data, size_t size);
 
-// Prints to screen integer 'd' and
+// Prints to screen unsigned integer 'd' and
 // returns the number of characters printed
-int print_int_(int d) {
-    int char_count = 0;
-
-    bool negative = (unsigned int)d & 0x80000000U;
-    if (negative) {
-        putchar('-');
-        d *= -1;
-        ++char_count;
-    }
-    
-    int divisor = 10E+8;
-    while (d/divisor == 0) {
-        divisor /= 10;
-        if (divisor == 0) {
-            divisor = 1;
-            break;
-        }
-    }
-
-    while (divisor != 0) {
-        char digit = (d/divisor) % 10;
-        putchar(digit + '0');
-        ++char_count;
-        if (divisor == 1) {
-            divisor = 0;
-            continue;
-        }
-
-        divisor /= 10;
-        if (divisor == 0)
-            divisor = 1;
-    }
-    return char_count;
-}
-
-int print_uint_(unsigned int u) {
+int print_uint_(uint32_t u) {
     int char_count = 0;
 
     unsigned int divisor = 10E+8;
@@ -59,7 +25,7 @@ int print_uint_(unsigned int u) {
 
     while (divisor != 0) {
         char digit = (u/divisor) % 10;
-        putchar(digit + '0');
+        kputchar(digit + '0');
         ++char_count;
         if (divisor == 1) {
             divisor = 0;
@@ -73,7 +39,7 @@ int print_uint_(unsigned int u) {
     return char_count;
 }
 
-int printf(const char* format, ...) {
+int kprintf(const char* format, ...) {
     va_list args;
     va_start(args, format);
 
@@ -81,12 +47,6 @@ int printf(const char* format, ...) {
     int characters_printed = 0;
     
     size_t length = 0;
-    const char* s;
-    // double f;
-    int i;
-    unsigned int u;
-    char c;
-
     while (*format)
     {
         if (*format == '%') {
@@ -107,35 +67,43 @@ int printf(const char* format, ...) {
             // Entered %f, %d, %s, ... etc
             switch (*format)
             {
-                case 's':
-                    s = va_arg(args, const char*);
+                case 's': {
+                    const char* s = va_arg(args, const char*);
                     length = strlen(s);
                     characters_printed += length;
                     terminal_write(s, length);
                     break;
+                }
                 case 'f':
                     // f = va_arg(args, double);
                     // characters_printed += print_float_(f);
                     break;
                 case 'd':
-                case 'i':
-                    i = va_arg(args, int); 
-                    characters_printed += print_int_(i);
+                case 'i': {
+                    int i = va_arg(args, int);
+                    if (i < 0) {
+                        kputchar('-');
+                        ++characters_printed;
+                    }
+                    characters_printed += print_uint_(i);
                     break;
-                case 'u':
-                    u = va_arg(args, unsigned int);
+                }
+                case 'u': {
+                    unsigned int u = va_arg(args, unsigned int);
                     characters_printed += print_uint_(u);
                     break;
-                case 'c':
-                    c = va_arg(args, int);
-                    putchar(c);
+                }
+                case 'c': {
+                    int c = va_arg(args, int);
+                    kputchar(c);
                     ++characters_printed;
                     break;
+                }
             }
             ++format;
             continue;
         }
-        putchar(*format);
+        kputchar(*format);
         ++characters_printed;
         ++format;
     }

@@ -3,7 +3,7 @@
 
 extern "C"
 {
-#include "../libc/include/stdio.h"
+#include "../klibc/include/stdio.h"
 }
 
 #endif

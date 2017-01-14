@@ -9,15 +9,15 @@
 #error "This file needs to be compiled with a ix86-elf compiler"
 #endif
 
-#include "../../libc++/cstdio"
+#include "../../klibc++/cstdio"
 #include "vga/vga.hpp"
 
 extern "C"
 void kernel_main() {
     terminal_initialize();
-    printf("Hi!\n");
+    kprintf("Hi!\n");
 
-    printf("%s", "\n\n\
+    kprintf("%s", "\n\n\
 This FindMax function takes as its first parameter the number of additional\n\
 arguments it is going to get. The first additional argument is retrieved and\n\
 used as an initial reference for comparison, and then the remaining additional\n\

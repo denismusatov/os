@@ -1,0 +1,10 @@
+#ifndef CSTDIO
+#define CSTDIO
+
+extern "C"
+{
+#include "../klibc/include/stdio.h"
+}
+
+#endif
+
