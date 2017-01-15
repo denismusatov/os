@@ -33,11 +33,3 @@ void outb(uint16_t port, uint8_t data)
     __asm__ __volatile__ ("outb %1, %0" : : "dN" (port), "a" (data));
 }
 
-bool interrupts_are_enabled()
-{
-    unsigned long flags;
-    __asm__ __volatile__ ("pushf\n\t"
-                          "pop %0" : "=g"(flags));
-    return flags & (1 << 9);
-}
-

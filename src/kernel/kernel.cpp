@@ -33,7 +33,7 @@
 
 extern "C"
 {
-#include "../../asm/io.h"
+#include "../../asm/interrupts.h"
 }
 
 #include "vga/vga.hpp"
@@ -50,6 +50,7 @@ used as an initial reference for comparison, and then the remaining additional\n
 arguments are retrieved in a loop and compared to return the greatest one\n\
 (which in this case is 892).\n");
     kprintf("Interrupts are enabled: %d\n", interrupts_are_enabled());
-
+    enable_interrupts();
+    kprintf("Interrupts are enabled: %d\n", interrupts_are_enabled());
 }
 
