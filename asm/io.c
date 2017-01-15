@@ -19,18 +19,25 @@
 // SOFTWARE.
 
 #include "io.h"
+#include <stdint.h>
 
-inline unsigned char inb (unsigned short _port)
+uint8_t inb(uint16_t port)
 {
-    unsigned char rv;
-    __asm__ __volatile__ ("inb %1, %0" : "=a" (rv) : "dN" (_port));
-    return rv;
+    uint8_t value;
+    __asm__ __volatile__ ("inb %1, %0" : "=a" (value) : "dN" (port));
+    return value;
 }
 
-inline void outb (unsigned short _port, unsigned char _data)
+void outb(uint16_t port, uint8_t data)
 {
-    __asm__ __volatile__ ("outb %1, %0" : : "dN" (_port), "a" (_data));
+    __asm__ __volatile__ ("outb %1, %0" : : "dN" (port), "a" (data));
 }
 
-
+bool interrupts_are_enabled()
+{
+    unsigned long flags;
+    __asm__ __volatile__ ("pushf\n\t"
+                          "pop %0" : "=g"(flags));
+    return flags & (1 << 9);
+}
 

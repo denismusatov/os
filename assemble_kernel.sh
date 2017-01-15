@@ -18,7 +18,7 @@ if ! [ -d bin ]; then
     mkdir bin
 fi
 
-export SYSROOT="sysroot2"
+export SYSROOT="sysroot"
 export CPPFLAGS="-std=c++14 -fno-rtti -fno-exceptions "
 export COMMON_FLAGS=" -ffreestanding -O2 -Wall -Wextra"
 export CFLAGS="-std=c11 $COMMON_FLAGS"
@@ -45,7 +45,7 @@ i686-elf-g++ $CPPFLAGS -c src/kernel/vga/vga.cpp -o build/vga.o $COMMON_FLAGS
 printf "Linking final binary... "
 i686-elf-gcc -T link/linker.ld -o bin/os.bin $COMMON_FLAGS \
     -nostdlib build/boot.o build/kernel.o build/vga.o build/string.o \
-    build/kprintf.o -lgcc && echo "success"
+    build/kprintf.o build/io.o -lgcc && echo "success"
 
 cp bin/os.bin isodir/boot/
 
