@@ -26,7 +26,7 @@ export CFLAGS="-std=c11 $COMMON_FLAGS"
 . ./copy_headers.sh
 
 printf "Assembling bootstrap..."
-i686-elf-as src/boot/boot.s -o build/boot.o && echo "success"
+i686-elf-as kernel/boot/boot.s -o build/boot.o && echo "success"
 
 # Assemble libc
 i686-elf-gcc -c klibc/src/string.c -o build/string.o $CFLAGS
@@ -37,10 +37,10 @@ i686-elf-gcc -c asm/io.c -o build/io.o $CFLAGS
 i686-elf-gcc -c asm/interrupts.c -o build/interrupts.o $CFLAGS
 
 printf "Assembling kernel..."
-i686-elf-g++ $CPPFLAGS -c src/kernel/kernel.cpp -o build/kernel.o $COMMON_FLAGS\
+i686-elf-g++ $CPPFLAGS -c kernel/src/kernel.cpp -o build/kernel.o $COMMON_FLAGS\
     && echo "success"
 
-i686-elf-g++ $CPPFLAGS -c src/kernel/vga/vga.cpp -o build/vga.o $COMMON_FLAGS
+i686-elf-g++ $CPPFLAGS -c kernel/src/vga/vga.cpp -o build/vga.o $COMMON_FLAGS
 
 
 printf "Linking final binary... "

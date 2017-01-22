@@ -29,7 +29,7 @@
 
 extern void terminal_write(const char* data, size_t size);
 
-static int kprint_uint_(uint32_t u);
+static int kprint_uint(uint32_t u);
 
 int kprintf(const char* format, ...) {
     va_list args;
@@ -75,12 +75,12 @@ int kprintf(const char* format, ...) {
                         kputchar('-');
                         ++characters_printed;
                     }
-                    characters_printed += kprint_uint_(i);
+                    characters_printed += kprint_uint(i);
                     break;
                 }
                 case 'u': {
                     unsigned int u = va_arg(args, unsigned int);
-                    characters_printed += kprint_uint_(u);
+                    characters_printed += kprint_uint(u);
                     break;
                 }
                 case 'c': {
@@ -103,7 +103,7 @@ int kprintf(const char* format, ...) {
 
 // Prints to screen unsigned integer 'd' and
 // returns the number of characters printed
-static int kprint_uint_(uint32_t u) {
+static int kprint_uint(uint32_t u) {
     int char_count = 0;
 
     unsigned int divisor = 10E+8;
