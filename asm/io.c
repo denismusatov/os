@@ -21,9 +21,9 @@
 #include "io.h"
 #include <stdint.h>
 
-uint8_t inb(uint16_t port)
+int8_t inb(uint16_t port)
 {
-    uint8_t value;
+    int8_t value;
     __asm__ __volatile__ ("inb %1, %0" : "=a" (value) : "dN" (port));
     return value;
 }

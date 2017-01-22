@@ -22,8 +22,9 @@
 #define IO_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
-unsigned char inb (unsigned short _port);
+int8_t inb (unsigned short _port);
 void outb (unsigned short _port, unsigned char _data);
 
 #endif

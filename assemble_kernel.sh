@@ -39,13 +39,15 @@ i686-elf-gcc -c asm/interrupts.c -o build/interrupts.o $CFLAGS
 printf "Assembling kernel..."
 i686-elf-g++ $CPPFLAGS -c kernel/src/kernel.cpp -o build/kernel.o $COMMON_FLAGS\
     && echo "success"
+i686-elf-gcc $CFLAGS -c kernel/src/keyboard.c -o build/keyboard.o $COMMON_FLAGS\
+    && echo "success"
 
 i686-elf-g++ $CPPFLAGS -c kernel/src/vga/vga.cpp -o build/vga.o $COMMON_FLAGS
 
 
 printf "Linking final binary... "
 i686-elf-gcc -T link/linker.ld -o bin/os.bin $COMMON_FLAGS \
-    -nostdlib build/boot.o build/kernel.o build/vga.o build/string.o \
+    -nostdlib build/boot.o build/kernel.o build/keyboard.o build/vga.o build/string.o \
     build/kprintf.o build/io.o build/interrupts.o -lgcc && echo "success"
 
 cp bin/os.bin isodir/boot/

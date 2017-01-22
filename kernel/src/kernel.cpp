@@ -34,6 +34,7 @@
 extern "C"
 {
 #include "../../asm/interrupts.h"
+#include "keyboard.h"
 }
 
 #include "vga/vga.hpp"
@@ -52,5 +53,11 @@ arguments are retrieved in a loop and compared to return the greatest one\n\
     kprintf("Interrupts are enabled: %d\n", interrupts_are_enabled());
     enable_interrupts();
     kprintf("Interrupts are enabled: %d\n", interrupts_are_enabled());
+ 
+    //   while (1)
+    //   {
+        // char c = getchar();
+        // kprintf("%c", c);
+    //    }
 }
 
