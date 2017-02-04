@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+. ./iso.sh
 
-qemu-system-i386 -curses -cdrom ./iso/os.iso
+qemu-system-$(./target-triplet-to-arch.sh $HOST) -curses -cdrom os.iso
 

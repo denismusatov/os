@@ -21,14 +21,27 @@
 #ifndef STRING_H
 #define STRING_H
 
+#include <sys/cdefs.h>
 #include <stddef.h>
 
-void* memcpy(void* destination, const void* source, size_t num);
-void* wmemcpy(void* destination, const void* source, size_t num);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+void* memmove(void* destptr, const void* srcptr, size_t size);
+void* memcpy(void* __restrict destination, const void* __restrict source,
+             size_t num);
+void* wmemcpy(void* __restrict destination, const void* __restrict source,
+              size_t num);
 void* memset(void* ptr, int value, size_t num);
 void* wmemset(void* ptr, int value, size_t num);
-
+int memcmp(const void* aptr, vonst void* bptr, size_t size);
 size_t strlen(const char* str);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif
+

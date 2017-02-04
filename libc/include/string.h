@@ -18,12 +18,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef STDIO_H
-#define STDIO_H
+#ifndef STRING_H
+#define STRING_H
 
-int kprintf(const char* format, ...);
+#include <sys/cdefs.h>
+#include <stddef.h>
 
-extern int kputchar(int c);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+void* memmove(void* destptr, const void* srcptr, size_t size);
+void* memcpy(void* __restrict destination, const void* __restrict source,
+             size_t num);
+void* wmemcpy(void* __restrict destination, const void* __restrict source,
+              size_t num);
+void* memset(void* ptr, int value, size_t num);
+void* wmemset(void* ptr, int value, size_t num);
+int memcmp(const void* aptr, vonst void* bptr, size_t size);
+size_t strlen(const char* str);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

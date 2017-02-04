@@ -1,23 +1,3 @@
-# Copyright 2017 (c) Denis Musatov
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 # Constants for the multiboot header.
 .set ALIGN,    1<<0             # align loaded modules on page boundaries
 .set MEMINFO,  1<<1             # provide memory map
@@ -75,14 +55,8 @@ _start:
     # in assembly as languages such as C cannot function without a stack.
     mov $stack_top, %esp
 
-    # This is a good place to initialize crucial processor state before the
-    # high-level kernel is entered. It's best to minimize the early
-    # environment where crucial features are offline. Note that the
-    # processor is not fully initialized yet: Features such as floating
-    # point instructions and instruction set extensions are not initialized
-    # yet. The GDT should be loaded here. Paging should be enabled here.
-    # C++ features such as global constructors and exceptions will require
-    # runtime support to work as well.
+    # Call the global constructors.
+    call _init
 
     # Enter the high-level kernel. The ABI requires the stack is 16-byte
     # aligned at the time of the call instruction (which afterwards pushes
@@ -109,3 +83,4 @@ _start:
 # Set the size of the _start symbol to the current location '.' minus its start.
 # This is useful when debugging or when you implement call tracing.
 .size _start, . - _start
+

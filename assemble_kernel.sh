@@ -20,7 +20,7 @@ fi
 
 export SYSROOT="sysroot"
 export CPPFLAGS="-std=c++14 -fno-rtti -fno-exceptions "
-export COMMON_FLAGS=" -ffreestanding -O2 -Wall -Wextra"
+export COMMON_FLAGS="-g -ffreestanding -O2 -Wall -Wextra"
 export CFLAGS="-std=c11 $COMMON_FLAGS"
 
 . ./copy_headers.sh
@@ -32,9 +32,8 @@ i686-elf-as kernel/boot/boot.s -o build/boot.o && echo "success"
 i686-elf-gcc -c klibc/src/string.c -o build/string.o $CFLAGS
 i686-elf-gcc -c klibc/src/kprintf.c -o build/kprintf.o $CFLAGS
 
-# Assemble os-specific IO library
-i686-elf-gcc -c asm/io.c -o build/io.o $CFLAGS
-i686-elf-gcc -c asm/interrupts.c -o build/interrupts.o $CFLAGS
+# Assemble inline assembly functions
+make -C asm
 
 printf "Assembling kernel..."
 i686-elf-g++ $CPPFLAGS -c kernel/src/kernel.cpp -o build/kernel.o $COMMON_FLAGS\

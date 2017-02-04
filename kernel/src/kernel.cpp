@@ -37,7 +37,7 @@ extern "C"
 #include "keyboard.h"
 }
 
-#include "vga/vga.hpp"
+#include "../arch/i383/vga/vga.hpp"
 
 extern "C"
 void kernel_main() {
@@ -51,13 +51,18 @@ used as an initial reference for comparison, and then the remaining additional\n
 arguments are retrieved in a loop and compared to return the greatest one\n\
 (which in this case is 892).\n");
     kprintf("Interrupts are enabled: %d\n", interrupts_are_enabled());
-    enable_interrupts();
+    // enable_interrupts();
     kprintf("Interrupts are enabled: %d\n", interrupts_are_enabled());
  
-    //   while (1)
-    //   {
-        // char c = getchar();
-        // kprintf("%c", c);
-    //    }
+    while (1)
+    {
+        halt(); 
+        kprintf("About to get char\n");
+        char c = getchar();
+        kprintf("Got char\n");
+        kprintf("%c", c);
+    //halt();
+    //kprintf("HEY!");
+    }
 }
 
