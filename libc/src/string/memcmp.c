@@ -1,5 +1,5 @@
-
 #include <string.h>
+#include <stdint.h>
 
 int memcmp(const void* aptr, const void* bptr, size_t size)
 {

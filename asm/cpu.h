@@ -1,3 +1,6 @@
+#ifndef CPU_H
+#define CPU_H
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -6,4 +9,6 @@ uint32_t get_cr2_value();
 uint32_t get_cr3_value();
 
 bool protected_mode_is_enabled();
+
+#endif
 

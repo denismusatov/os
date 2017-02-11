@@ -24,7 +24,7 @@ struct IDTDescr {
 //  +-----------+-----------+
 //  4           2           0
 
-void* irq_action_vector = 0000h;
+void* irq_action_vector = 0000;
 
 // IVT Offset | INT #     | Description
 // -----------+-----------+-----------------------------------

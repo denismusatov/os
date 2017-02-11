@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdint.h>
 
 void* memmove(void* destptr, const void* srcptr, size_t size)
 {

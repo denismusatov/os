@@ -44,11 +44,13 @@ enum class vga_color {
 };
 
 static inline uint8_t vga_entry_color(vga_color fg,
-                                      vga_color bg) {
+                                      vga_color bg)
+{
     return static_cast<uint8_t>(fg) | static_cast<uint8_t>(bg) << 4;
 }
 
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color) {
+static inline uint16_t vga_entry(unsigned char uc, uint8_t color)
+{
     return static_cast<uint16_t>(uc) | static_cast<uint16_t>(color) << 8;
 }
 
@@ -61,7 +63,9 @@ size_t terminal_column;
 uint8_t terminal_color;
 uint16_t* terminal_buffer;
 
-void terminal_initialize() {
+extern "C"
+void terminal_initialize()
+{
     terminal_row = 0;
     terminal_column = 0;
     terminal_color = vga_entry_color(vga_color::white, vga_color::black);
@@ -87,17 +91,20 @@ void terminal_scroll_up()
         terminal_buffer[(VGA_HEIGHT - 1)*VGA_WIDTH + i] &= (0xFF00 | static_cast<uint16_t>(' '));
 }
 
-void terminal_setcolor(uint8_t color) {
+void terminal_setcolor(uint8_t color)
+{
     terminal_color = color;
 }
 
-void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
+void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
+{
     const size_t index = y * VGA_WIDTH + x;
     terminal_buffer[index] = vga_entry(c, color);
 }
 
 extern "C" 
-int kputchar(int c) {
+int putchar(int c)
+{
     if (c == '\n') {	
         terminal_column = 0;
         ++terminal_row;
@@ -115,8 +122,9 @@ int kputchar(int c) {
 }
 
 extern "C"
-void terminal_write(const char* data, size_t size) {
+void terminal_write(const char* data, size_t size)
+{
     for (size_t i = 0; i < size; i++)
-        kputchar(data[i]);
+        putchar(data[i]);
 }
 

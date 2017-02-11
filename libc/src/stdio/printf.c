@@ -56,12 +56,12 @@ int printf(const char* format, ...) {
                         putchar('-');
                         ++characters_printed;
                     }
-                    characters_printed += kprint_uint(i);
+                    characters_printed += print_uint(i);
                     break;
                 }
                 case 'u': {
                     unsigned int u = va_arg(args, unsigned int);
-                    characters_printed += kprint_uint(u);
+                    characters_printed += print_uint(u);
                     break;
                 }
                 case 'c': {
@@ -84,7 +84,7 @@ int printf(const char* format, ...) {
 
 // Prints to screen unsigned integer 'd' and
 // returns the number of characters printed
-static int kprint_uint(uint32_t u) {
+static int print_uint(uint32_t u) {
     int char_count = 0;
 
     unsigned int divisor = 10E+8;

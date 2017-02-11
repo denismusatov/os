@@ -1,10 +1,6 @@
 SYSTEM_HEADER_PROJECTS="libc kernel"
 PROJECTS="libc kernel"
 
-for PROJECT in $SYSTEM_HEADER_PROJECTS; do
-    echo 'PROJECT='$PROJECT
-done
-
 export MAKE=${MAKE:-make}
 export HOST=${HOST:-$(./default-host.sh)}
 
@@ -13,9 +9,9 @@ export AS=${HOST}-as
 export CC=${HOST}-gcc
 export CPPC=${HOST}-g++
 
-export PREFIX=/usr
+export PREFIX="$(pwd)/sysroot/usr"
 export EXEC_PREFIX=$PREFIX
-export BOOTDIR=/boot
+export BOOTDIR="$(pwd)/sysroot/boot"
 export LIBDIR=$EXEC_PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 

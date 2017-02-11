@@ -23,7 +23,7 @@
 
 export "C"
 {
-#include "../libc/include/string.h"
+#include <string.h>
 }
 
 #endif

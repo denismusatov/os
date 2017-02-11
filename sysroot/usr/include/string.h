@@ -36,7 +36,7 @@ void* wmemcpy(void* __restrict destination, const void* __restrict source,
               size_t num);
 void* memset(void* ptr, int value, size_t num);
 void* wmemset(void* ptr, int value, size_t num);
-int memcmp(const void* aptr, vonst void* bptr, size_t size);
+int memcmp(const void* aptr, const void* bptr, size_t size);
 size_t strlen(const char* str);
 
 #ifdef __cplusplus
