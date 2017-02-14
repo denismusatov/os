@@ -2,6 +2,7 @@
 /iso
 .*.un~
 *.o
+*.a
 *.bin
 *.kernel
 *.iso

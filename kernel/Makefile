@@ -56,9 +56,6 @@ LINK_LIST=\
 all: os.kernel
 
 os.kernel: $(OBJS) $(ARCHDIR)/linker.ld
-	echo "Libdir = $(LIBDIR)"
-	echo "Contents:"
-	ls $(LIBDIR)
 	$(CC) -L$(LIBDIR) -T $(ARCHDIR)/linker.ld -o $@ $(COMMON_FLAGS) $(CFLAGS) $(LINK_LIST)
 	grub-file --is-x86-multiboot os.kernel
 
