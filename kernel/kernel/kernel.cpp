@@ -40,9 +40,15 @@ extern "C"
 #include "../include/vga.hpp"
 
 extern "C"
-void kernel_main()
+void kernel_early()
 {
     terminal_initialize();
+    printf("[done] Terminal initialization.\n");
+}
+
+extern "C"
+void kernel_main()
+{
     printf("Hi!\n");
 
     printf("%s", "\n\n\

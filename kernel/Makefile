@@ -85,6 +85,7 @@ install-headers:
 
 install-kernel: os.kernel
 	mkdir -p $(DESTDIR)$(BOOTDIR)
+	echo '$(DESTDIR)$(BOOTDIR)'
 	cp os.kernel $(DESTDIR)$(BOOTDIR)
 
 -include $(OBJS:.o=.d)

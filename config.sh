@@ -9,9 +9,9 @@ export AS=${HOST}-as
 export CC=${HOST}-gcc
 export CPPC=${HOST}-g++
 
-export PREFIX="$(pwd)/sysroot/usr"
+export PREFIX="/usr"
 export EXEC_PREFIX=$PREFIX
-export BOOTDIR="$(pwd)/sysroot/boot"
+export BOOTDIR="/boot"
 export LIBDIR=$EXEC_PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
