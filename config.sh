@@ -1,5 +1,5 @@
-SYSTEM_HEADER_PROJECTS="libc kernel"
-PROJECTS="libc kernel"
+SYSTEM_HEADER_PROJECTS="libc libc++ kernel"
+PROJECTS="libc libc++ kernel"
 
 export MAKE=${MAKE:-make}
 export HOST=${HOST:-$(./default-host.sh)}
@@ -28,6 +28,6 @@ export CPPC="$CPPC --sysroot=$SYSROOT"
 # because it was configured with --without-headers rather than --with-sysroot.
 if echo "$HOST" | grep -Eq -- '-elf($|-)'; then
     export CC="$CC -isystem=$INCLUDEDIR"
-    export CPPC="$CPPC -isystem=$INCLUDEDIR"
+    export CPPC="$CPPC -isystem=$INCLUDEDIR -isystem=$INCLUDEDIR/c++"
 fi
 

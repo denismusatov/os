@@ -21,7 +21,7 @@
 #ifndef CSTRING
 #define CSTRING
 
-export "C"
+extern "C"
 {
 #include <string.h>
 }

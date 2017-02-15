@@ -23,7 +23,7 @@
 
 extern "C"
 {
-#include "../klibc/include/stdio.h"
+#include <stdio.h>
 }
 
 #endif

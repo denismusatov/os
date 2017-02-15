@@ -3,6 +3,7 @@
 .*.un~
 *.o
 *.a
+*.d
 *.bin
 *.kernel
 *.iso

@@ -29,7 +29,8 @@
 #error "This file needs to be compiled with a ix86-elf compiler"
 #endif
 
-#include "../../klibc++/cstdio"
+#include <cstring>
+#include <cstdio>
 
 extern "C"
 {

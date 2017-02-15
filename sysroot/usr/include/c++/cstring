@@ -21,9 +21,9 @@
 #ifndef CSTRING
 #define CSTRING
 
-export "C"
+extern "C"
 {
-#include "../libc/include/string.h"
+#include <string.h>
 }
 
 #endif
