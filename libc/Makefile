@@ -43,6 +43,7 @@ FREEOBJS=\
 		src/string/memmove.o \
 		src/string/memset.o \
 		src/string/strlen.o \
+		src/libc.o \
 
 HOSTEDOBJS=\
 		$(ARCH_HOSTEDOBJS) \
