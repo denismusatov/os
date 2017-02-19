@@ -33,9 +33,6 @@ LIBK_CPPFLAGS:=$(LIBK_CPPFLAGS) $(KERNEL_ARCH_CPPFLAGS)
  
 FREEOBJS=\
 		$(ARCH_FREEOBJS) \
-		../asm/cpu.o \
-		../asm/io.o \
-		../asm/interrupts.o \
 		src/stdio/printf.o \
 		src/stdlib/abort.o \
 		src/string/memcmp.o \
