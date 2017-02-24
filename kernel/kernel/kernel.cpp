@@ -18,9 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <stddef.h>
-#include <stdint.h>
-
 #if defined(__linux__)
 #error
 #endif
@@ -29,14 +26,17 @@
 #error "This file needs to be compiled with a ix86-elf compiler"
 #endif
 
-#include <cstring>
-#include <cstdio>
+#include <stddef.h>
 
 extern "C"
 {
+#include <sys/system.h>
 #include "../../asm/interrupts.h"
 #include "keyboard.h"
 }
+
+#include <cstring>
+#include <cstdio>
 
 #include "../include/vga.hpp"
 
@@ -46,7 +46,6 @@ void kernel_early()
     terminal_initialize();
     printf("[done] Terminal initialization.\n");
 }
-extern "C" void gdt_install();
 
 extern "C"
 void kernel_main()
@@ -55,5 +54,6 @@ void kernel_main()
     printf("Interrupts are enabled: %d\n", interrupts_are_enabled());
     printf("Setting up GDT\n");
     gdt_install();
+    idt_install();
 }
 

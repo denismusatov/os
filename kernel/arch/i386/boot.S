@@ -40,7 +40,14 @@ _start:
 .type gdt_flush, @function
 .extern gdtp
 gdt_flush:
-    lgdt (gdtp)
+    lgdt gdtp
+    ret
+
+.global setup_idt
+.type setup_idt, @function
+.extern idt_descr
+setup_idt:
+    lidt idt_descr
     ret
 
 # Set the size of the _start symbol to the current location '.' minus its start.

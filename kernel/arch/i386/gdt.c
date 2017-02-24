@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include <sys/system.h>
 #include <stdio.h>
 
 struct gdt_entry
@@ -22,7 +22,7 @@ struct gdt_ptr gdtp;
 
 extern void gdt_flush();
 
-void gdt_set_gate(int32_t num, uint32_t base,
+static void gdt_set_gate(int32_t num, uint32_t base,
                   uint32_t limit, uint8_t access, uint8_t gran)
 {
     gdt[num].base_low = (base & 0xFFFF);
@@ -38,12 +38,9 @@ void gdt_set_gate(int32_t num, uint32_t base,
 
 void gdt_install()
 {
-    int32_t pointer = &gdtp;
-
-    printf("Address of this gdt is %i\n", pointer);
     /* Setup the GDT pointer and limit */
     gdtp.limit = (sizeof(struct gdt_entry) * 3) - 1;
-    gdtp.base = &gdt;
+    gdtp.base = (uint32_t)&gdt;
 
     /* Our NULL descriptor */
     gdt_set_gate(0, 0, 0, 0, 0);
@@ -57,11 +54,15 @@ void gdt_install()
      * same as our code segment, but the descriptor type in
      * this entry's access byte says it's a Data Segment */
     gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+    struct gdt_ptr* ptr = &gdtp;
+    int32_t pointer = *(int32_t*)(ptr);
+
+    printf("Address of this gdt is %i\n", pointer);
     gdt_flush();
 
     int32_t sgdt = 0;
-    //struct gdt_ptr* gdtp2 = 0;
-    // __asm__ __volatile__("sgdt %0":"=m"(sgdt)::"memory");
+    struct gdt_ptr* gdtp2 = 0;
+    __asm__ __volatile__("sgdt %0":"=m"(sgdt)::"memory");
     printf("Address of CPU gdt is %i\n", sgdt);
     printf("'gdt_install' completed\n");
 }
