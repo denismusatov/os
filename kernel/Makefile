@@ -35,6 +35,7 @@ KERNEL_OBJS=\
 			kernel/keyboard.o \
 
 OBJS=\
+	 $(ARCHDIR)/gdt.o \
 	 $(ARCHDIR)/crti.o \
 	 $(ARCHDIR)/crtbegin.o \
 	 $(KERNEL_OBJS) \
@@ -43,6 +44,7 @@ OBJS=\
 
 LINK_LIST=\
 		  $(LDFLAGS) \
+		  $(ARCHDIR)/gdt.o \
 		  $(ARCHDIR)/crti.o \
 		  $(ARCHDIR)/crtbegin.o \
 		  $(KERNEL_OBJS) \

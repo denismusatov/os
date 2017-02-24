@@ -46,11 +46,14 @@ void kernel_early()
     terminal_initialize();
     printf("[done] Terminal initialization.\n");
 }
+extern "C" void gdt_install();
 
 extern "C"
 void kernel_main()
 {
     printf("kernel_main entered\n");
-    printf("Interrupts are enabled: %d\n", interrupts_are_enabled()); 
+    printf("Interrupts are enabled: %d\n", interrupts_are_enabled());
+    printf("Setting up GDT\n");
+    gdt_install();
 }
 

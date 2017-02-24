@@ -36,6 +36,13 @@ _start:
 1:    hlt
     jmp 1b
 
+.global gdt_flush
+.type gdt_flush, @function
+.extern gdtp
+gdt_flush:
+    lgdt (gdtp)
+    ret
+
 # Set the size of the _start symbol to the current location '.' minus its start.
 # This is useful when debugging or when you implement call tracing.
 .size _start, . - _start
