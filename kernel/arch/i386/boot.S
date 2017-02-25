@@ -45,9 +45,9 @@ gdt_flush:
 
 .global setup_idt
 .type setup_idt, @function
-.extern idt_descr
+.extern idt_info
 setup_idt:
-    lidt idt_descr
+    lidt idt_info
     ret
 
 # Set the size of the _start symbol to the current location '.' minus its start.

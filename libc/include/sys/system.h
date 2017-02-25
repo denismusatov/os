@@ -3,10 +3,20 @@
 
 #include <stdint.h>
 
-void gdt_install();
+struct Registers
+{
+    uint32_t gs, fs, es, ds;
+    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;
+    uint32_t int_no, err_code;
+    uint32_t eip, cs, eflags, useresp, ss;
+};
 
+void gdt_install();
 void idt_install();
-void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags);
+
+void set_interrupt_gate(int n, char* addr);
+void set_system_gate(int n, char* addr);
+void set_trap_gate(int n, char* addr);
 
 #endif
 

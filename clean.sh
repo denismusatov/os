@@ -6,3 +6,4 @@ for PROJECT in $PROJECTS; do
     (cd $PROJECT && $MAKE clean)
 done
 
+rm os.iso
